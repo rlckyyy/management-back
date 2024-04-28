@@ -1,0 +1,29 @@
+global:
+  scrape_interval: 10s
+  evaluation_interval: 10s
+
+scrape_configs:
+  - job_name: 'company_service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'localhost:8082' ]
+        labels:
+          application: 'Company Service Application'
+  - job_name: 'user_service'
+    metrics_path: '/actuator'
+    static_configs:
+      - targets: [ 'localhost:8081' ]
+        labels:
+          application: 'User Service Application'
+  - job_name: 'storage_service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'localhost:8083' ]
+        labels:
+          application: 'Storage Service Application'
+  - job_name: 'mail_service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'localhost:8084' ]
+        labels:
+          application: 'Mail Service Application'

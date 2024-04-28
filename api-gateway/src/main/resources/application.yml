@@ -1,3 +1,22 @@
 spring:
   application:
     name: api-gateway
+  main:
+    banner-mode: off
+    allow-bean-definition-overriding: true
+    web-application-type: reactive
+  cloud:
+    gateway:
+      routes:
+        user-service-url: http://localhost:8081
+        company-service-url: http://localhost:8082
+        storage-service-url: http://localhost:8083
+        mail-service-url: http://localhost:8084
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8082/realms/management-microservice-realm
+server:
+  port: 8080
+  forward-headers-strategy: framework

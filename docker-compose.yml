@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.1
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      DB_VENDOR: POSTGRES
+      DB_ADDR: kc_db
+      DB_DATABASE: keycloak_db
+      DB_USER: my_admin
+      DB_SCHEMA: public
+      DB_PASSWORD: my_password
+    volumes:
+      - './config/keycloak/import:/opt/keycloak/data/import'
+    ports:
+      - "8082:8080"
+    command:
+      - "start-dev"
+      - "--import-realm"
+    depends_on:
+      - kc_db
+  kc_db:
+    image: postgres
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_USER: my_admin
+      POSTGRES_PASSWORD: my_password
+      POSTGRES_DB: keycloak_db
+    ports:
+      - "5434:5433"
+  postgres-container:
+    container_name: postgres-instance-management
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres:/volumes/student:/data/postgres
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    depends_on:
+      - prometheus
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana:/var/lib/grafana
+      - ./config/grafana/provisioning/:/etc/grafana/provisioning/
+    restart: always
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    volumes:
+      - ./config/prometheus/:/etc/prometheus/
+      - prometheus:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/usr/share/prometheus/console_libraries"
+      - "--web.console.templates=/usr/share/prometheus/consoles"
+    ports:
+      - "9090:9090"
+  mongo:
+    container_name: mongo-db
+    image: mongo
+    restart: always
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo:/data/mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongouser
+      MONGO_INITDB_ROOT_PASSWORD: mongopassword
+
+volumes:
+  prometheus:
+  grafana:
+  mongo:
+  postgres:
