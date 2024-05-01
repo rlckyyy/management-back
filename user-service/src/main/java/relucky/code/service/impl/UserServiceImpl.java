@@ -37,9 +37,6 @@ public class UserServiceImpl implements UserService {
         var auth = SecurityContextHolder.getContext().getAuthentication();
         var jwt = (Jwt) auth.getPrincipal();
         var email = jwt.getClaimAsString("email");
-        if (userRepository.findByEmail(email).isPresent()){
-            throw new EmailRegisteredAlreadyException(email);
-        }
         User user = User.builder()
                 .email(email)
                 .build();
