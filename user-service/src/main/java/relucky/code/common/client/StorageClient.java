@@ -1,4 +1,7 @@
 package relucky.code.common.client;
 
-public class StorageClient {
+import org.springframework.cloud.openfeign.FeignClient;
+
+@FeignClient(name = "storage-service")
+public interface StorageClient {
 }

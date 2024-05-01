@@ -1,7 +1,12 @@
 package relucky.code.service;
 
-import relucky.code.model.dto.UserDto;
+import relucky.code.model.entity.User;
+
+import java.util.List;
 
 public interface UserService {
-    void save(UserDto userDto);
+    User getMe();
+    User save();
+    User getById(Long id);
+    List<User> getAll();
 }

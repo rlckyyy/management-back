@@ -16,7 +16,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8082/realms/management-microservice-realm
+          issuer-uri: http://localhost:8079/realms/management-microservice-realm
 server:
   port: 8080
   forward-headers-strategy: framework

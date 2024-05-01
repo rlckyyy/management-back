@@ -2,8 +2,10 @@ package relucky.code.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import relucky.code.model.dto.UserDto;
+import relucky.code.model.entity.User;
 import relucky.code.service.UserService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -11,13 +13,24 @@ import relucky.code.service.UserService;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping
-    public void save(@RequestBody UserDto userDto){
-        userService.save(userDto);
+    @GetMapping
+    public List<User> getUsers(){
+        return userService.getAll();
     }
-    @GetMapping("/hello")
-    public String sayHello(){
-        return "Hello world baby";
+
+    @PostMapping
+    public User save(){
+        return userService.save();
+    }
+
+    @GetMapping("me")
+    public User sayHello(){
+        return userService.getMe();
+    }
+
+    @GetMapping("{id}")
+    public User getUserById(@PathVariable Long id){
+        return userService.getById(id);
     }
 
 }

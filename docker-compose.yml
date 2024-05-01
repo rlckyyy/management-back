@@ -15,7 +15,7 @@ services:
     volumes:
       - './config/keycloak/import:/opt/keycloak/data/import'
     ports:
-      - "8082:8080"
+      - "8079:8080"
     command:
       - "start-dev"
       - "--import-realm"
@@ -39,6 +39,7 @@ services:
     ports:
       - "5433:5432"
     volumes:
+      - ./config/init/:/docker-entrypoint-initdb.d
       - postgres:/volumes/student:/data/postgres
   grafana:
     container_name: grafana
