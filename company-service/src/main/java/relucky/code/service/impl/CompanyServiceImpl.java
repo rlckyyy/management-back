@@ -3,6 +3,7 @@ package relucky.code.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import relucky.code.common.exception.CompanyWithNameExistsException;
 import relucky.code.model.entity.Company;
 import relucky.code.repository.CompanyRepository;
 import relucky.code.service.CompanyService;
@@ -17,6 +18,9 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void save(Company company) {
+        if (companyRepository.existsByName(company.getName())){
+            throw new CompanyWithNameExistsException("Company with name " + company.getName() + " already exists");
+        }
         companyRepository.save(company);
     }
 

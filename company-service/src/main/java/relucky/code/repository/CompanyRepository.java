@@ -6,5 +6,5 @@ import relucky.code.model.entity.Company;
 
 @Repository
 public interface CompanyRepository extends CrudRepository<Company, String> {
-
+    boolean existsByName(String name);
 }

@@ -1,4 +1,9 @@
 spring:
+  cache:
+    redis:
+      time-to-live: 3600000
+  session:
+    timeout: 43200m
   application:
     name: api-gateway
   main:
@@ -14,9 +19,26 @@ spring:
         mail-service-url: http://localhost:8084
   security:
     oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:8079/realms/management
+      client:
+        registration:
+          keycloak1:
+            provider: keycloak-provider
+            client-id: management-client
+            client-secret: 2rVwLfMIxRmFbE3I9HyQom2H3or8c5fm
+            redirect-uri: '{baseUrl}/{action}/oauth2/code/{registrationId}'
+            client-authentication-method: client_secret_basic
+            authorization-grant-type: authorization_code
+            scope:
+              - openid
+        provider:
+          keycloak-provider:
+            issuer-uri: http://localhost:8079/realms/management
+#            user-name-attribute: preferred_username
 server:
   port: 8080
   forward-headers-strategy: framework
+logging:
+  level:
+    org.springframework:
+      session: debug
+      security: debug

@@ -14,22 +14,22 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public List<User> getUsers(){
+    List<User> getUsers(){
         return userService.getAll();
     }
 
     @PostMapping
-    public User save(){
+    User save(){
         return userService.save();
     }
 
     @GetMapping("me")
-    public User sayHello(){
+    Object sayHello(){
         return userService.getMe();
     }
 
     @GetMapping("{id}")
-    public User getUserById(@PathVariable Long id){
+    User getUserById(@PathVariable Long id){
         return userService.getById(id);
     }
 

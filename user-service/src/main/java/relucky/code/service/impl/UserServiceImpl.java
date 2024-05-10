@@ -23,15 +23,13 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final StorageClient storageClient;
-
     @Override
-    public User getMe() {
+    public Object getMe() {
         var auth = SecurityContextHolder.getContext().getAuthentication();
         var jwt = (Jwt) auth.getPrincipal();
         var email = jwt.getClaimAsString("email");
-        return userRepository.findByEmail(email).orElseThrow(() -> new UserWithEmailNotFoundException(email));
+        return jwt;
     }
-
     @Override
     public User save() {
         var auth = SecurityContextHolder.getContext().getAuthentication();
@@ -42,15 +40,12 @@ public class UserServiceImpl implements UserService {
                 .build();
         return userRepository.save(user);
     }
-
     @Override
     public User getById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(User.class, id));
     }
-
     @Override
     public List<User> getAll() {
         return userRepository.findAll();
     }
-
 }

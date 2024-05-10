@@ -32,3 +32,6 @@ spring:
             logger-level: full
             connect-timeout: 1000
             read-timeout: 4000
+logging:
+  level:
+    org.springframework.security: debug

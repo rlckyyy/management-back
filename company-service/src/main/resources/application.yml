@@ -2,6 +2,11 @@ server:
   port: 8082
   forward-headers-strategy: framework
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8079/realms/management
   application:
     name: company-service
   datasource:
@@ -9,3 +14,17 @@ spring:
     password: postgres
     username: postgres
     driver-class-name: org.postgresql.Driver
+
+  sql:
+    init:
+      mode: always
+
+management:
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
