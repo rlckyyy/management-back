@@ -1,0 +1,24 @@
+server:
+  port: 9000
+
+logging:
+  level:
+    org.springframework:
+      web: debug
+      security: trace
+
+spring:
+  application:
+    name: auth-server
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5430/management_auth_server
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true

@@ -39,6 +39,6 @@ public class SecurityConfig {
 
     @Bean
     JwtDecoder jwtDecoder() {
-        return JwtDecoders.fromIssuerLocation(oidcIssuerLocation);
+        return JwtDecoders.fromOidcIssuerLocation(oidcIssuerLocation);
     }
 }

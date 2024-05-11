@@ -21,19 +21,18 @@ spring:
     oauth2:
       client:
         registration:
-          keycloak1:
-            provider: keycloak-provider
-            client-id: management-client
-            client-secret: 2rVwLfMIxRmFbE3I9HyQom2H3or8c5fm
-            redirect-uri: '{baseUrl}/{action}/oauth2/code/{registrationId}'
+          oidc-client:
+            provider: oidc-client-provider
+            client-id: oidc-client
             client-authentication-method: client_secret_basic
-            authorization-grant-type: authorization_code
+            client-secret: secret
             scope:
               - openid
+              - profile
+            authorization-grant-type:  authorization_code
         provider:
-          keycloak-provider:
-            issuer-uri: http://localhost:8079/realms/management
-#            user-name-attribute: preferred_username
+          oidc-client-provider:
+            issuer-uri: http://localhost:9000
 server:
   port: 8080
   forward-headers-strategy: framework

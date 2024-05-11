@@ -1,8 +1,11 @@
 package relucky.code.apigateway.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.boot.autoconfigure.security.StaticResourceLocation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -36,7 +39,6 @@ public class SecurityConfig {
                 .build();
     }
 
-
     @Bean
     WebSessionManager webSessionManager(WebSessionStore sessionStore) {
         DefaultWebSessionManager webSessionManager = new DefaultWebSessionManager();
@@ -49,4 +51,11 @@ public class SecurityConfig {
         return new SpringSessionWebSessionStore<>(new ReactiveRedisSessionRepository(reactiveRedisTemplate));
     }
 
+    @Bean
+    @Primary
+    public ObjectMapper objectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        return objectMapper;
+    }
 }
