@@ -18,9 +18,9 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void save(Company company) {
-        if (companyRepository.existsByName(company.getName())){
-            throw new CompanyWithNameExistsException("Company with name " + company.getName() + " already exists");
-        }
+//        if (companyRepository.existsByName(company.getName())){
+//            throw new CompanyWithNameExistsException("Company with name " + company.getName() + " already exists");
+//        }
         companyRepository.save(company);
     }
 

@@ -2,11 +2,11 @@ server:
   port: 8082
   forward-headers-strategy: framework
 spring:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:8079/realms/management
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://localhost:8079/realms/management
   application:
     name: company-service
   datasource:

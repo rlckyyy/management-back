@@ -23,7 +23,6 @@ import java.util.Arrays;
 @EnableWebFluxSecurity
 public class SecurityConfig {
 
-
     @Bean
     public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) {
         var staticResources = Arrays.stream(StaticResourceLocation.values()).flatMap(StaticResourceLocation::getPatterns).toArray(String[]::new);
